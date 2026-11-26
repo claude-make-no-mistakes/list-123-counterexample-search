@@ -14,15 +14,16 @@
 \maketitle
 
 \begin{abstract}
-We verify total $(1,3)$-weight choosability for all finite simple graphs with at
-most eight vertices and no component isomorphic to $K_2$. Every connected
+We verify total $(1,3)$-weight choosability for all finite simple graphs whose
+components have at most nine vertices and none is isomorphic to $K_2$. Every connected
 case has an explicit coefficient certificate over a prime field. We also give
 an exact fixed-graph search for lists that prevent a proper weighting.
 \end{abstract}
 
 \begin{theorem}
-Let $G=(V,E)$ be a finite simple graph with $|V|\leq 8$ and no $K_2$
-component. Assign a real number $a_v$ to each vertex and a set $L_e$ of three
+Let $G=(V,E)$ be a finite simple graph whose connected components have at
+most nine vertices and none is isomorphic to $K_2$.
+Assign a real number $a_v$ to each vertex and a set $L_e$ of three
 distinct real weights to each edge. There is a choice $x_e\in L_e$ such that
 $a_u+\sum_{e\ni u}x_e\ne a_v+\sum_{e\ni v}x_e$ for every $uv\in E$.
 \end{theorem}
@@ -59,23 +60,26 @@ Every archived residue is nonzero, which proves the corresponding integer
 coefficient is nonzero.
 
 We checked all connected graphs in the atlas through order seven and the
-McKay catalogue for order eight \cite{mckay}. The verifier checks coverage
-against the catalogue and replays each coefficient. A second implementation
-independently found a nonzero coefficient in all $12\,111$ cases through
-order eight.
+McKay catalogues for orders eight and nine \cite{mckay}. The verifier checks
+coverage against the catalogues. Two implementations evaluated every
+archived coefficient. A separate calculation using a different prime also
+found nonzero coefficients in all $12\,111$ cases through order eight.
 \end{proof}
 
 \begin{center}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrrrrrr}
 \hline
-Graph order & 3 & 4 & 5 & 6 & 7 & 8 \\
-Connected classes verified & 2 & 6 & 21 & 112 & 853 & 11,117 \\
+Graph order & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+Connected classes verified & 2 & 6 & 21 & 112 & 853 & 11,117 & 261,080 \\
 \hline
 \end{tabular}
 \end{center}
 
 \newpage
 \section*{Searching a graph beyond the certified range}
+As a first order-ten check, the same method certifies all 317 connected
+graphs with vertex degrees in $\{3,4\}$ and either 15 or 16 edges.
+
 For each edge $e$, give its three entries variables $x_{e,0},x_{e,1},x_{e,2}$
 with consecutive gaps at least one. Any bad lists can be sorted and rescaled
 together to meet these constraints. For each index tuple $k\in\{0,1,2\}^E$,
