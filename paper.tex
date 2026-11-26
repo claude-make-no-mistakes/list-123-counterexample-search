@@ -1,0 +1,117 @@
+\documentclass[10pt]{article}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb,amsthm}
+\DeclareFontShape{OMX}{cmex}{m}{n}{<->cmex10}{}
+\DeclareMathSizes{10}{10}{7}{7}
+\DeclareMathSizes{9}{10}{7}{7}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}
+\title{Exact certificates for list edge weighting on small graphs}
+\author{}
+\date{November 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We verify total $(1,3)$-weight choosability for all finite simple graphs with at
+most eight vertices and no component isomorphic to $K_2$. Every connected
+case has an explicit coefficient certificate over a prime field. We also give
+an exact fixed-graph search for lists that prevent a proper weighting.
+\end{abstract}
+
+\begin{theorem}
+Let $G=(V,E)$ be a finite simple graph with $|V|\leq 8$ and no $K_2$
+component. Assign a real number $a_v$ to each vertex and a set $L_e$ of three
+distinct real weights to each edge. There is a choice $x_e\in L_e$ such that
+$a_u+\sum_{e\ni u}x_e\ne a_v+\sum_{e\ni v}x_e$ for every $uv\in E$.
+\end{theorem}
+
+\begin{proof}
+The components can be treated separately, and isolated vertices impose no
+constraints. For a connected component with $m$ edges, consistently order
+the endpoints of each edge and put $S_v=\sum_{e\ni v}x_e$. Use the polynomial
+\[
+P_a(x)=\prod_{uv\in E}(S_u-S_v+a_u-a_v).
+\]
+Its homogeneous part of degree $m$ is $P_0$. By the Combinatorial
+Nullstellensatz \cite{alon}, any nonzero coefficient $[x^\alpha]P_0$ with
+$\sum_e\alpha_e=m$ and $\alpha_e\leq 2$ certifies a choice from every such
+assignment of edge lists, for all offsets $a_v$. This is the algebraic
+criterion used in weight choosability \cite{bgn,zhu}.
+
+For each catalogue graph, the supplementary data contain such an $\alpha$
+and the coefficient residue modulo $p=1\,000\,000\,007$. For each tuple
+$b$ of integers with $0\leq b_e\leq \alpha_e$, compute $P_0(b)$ by taking
+the vertex sums of the edge weights $b_e$. The exact coefficient is
+\[
+[x^\alpha]P_0=
+\frac{1}{\prod_e\alpha_e!}
+\sum_{0\leq b\leq\alpha}(-1)^{m-\sum_e b_e}
+\prod_e\binom{\alpha_e}{b_e}\,P_0(b).
+\]
+Indeed, the numerator is the mixed forward difference of orders $\alpha$ at
+zero. It annihilates any monomial with exponent below $\alpha_e$ in some
+coordinate. The total degree is $m$, so the only monomial left is
+$x^\alpha$, which contributes $\prod_e \alpha_e!$ times its coefficient.
+The denominator is a power of two, so the formula also holds modulo $p$.
+Every archived residue is nonzero, which proves the corresponding integer
+coefficient is nonzero.
+
+We checked all connected graphs in the atlas through order seven and the
+McKay catalogue for order eight \cite{mckay}. The verifier checks coverage
+against the catalogue and replays each coefficient. A second implementation
+independently found a nonzero coefficient in all $12\,111$ cases through
+order eight.
+\end{proof}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\hline
+Graph order & 3 & 4 & 5 & 6 & 7 & 8 \\
+Connected classes verified & 2 & 6 & 21 & 112 & 853 & 11,117 \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+\section*{Searching a graph beyond the certified range}
+For each edge $e$, give its three entries variables $x_{e,0},x_{e,1},x_{e,2}$
+with consecutive gaps at least one. Any bad lists can be sorted and rescaled
+together to meet these constraints. For each index tuple $k\in\{0,1,2\}^E$,
+impose the disjunction that some edge has equal endpoint sums under the
+weighting $x_{e,k_e}$. These disjunctions exactly express that no allowed
+weighting is proper. A search can add a disjunction whenever it finds a
+proper weighting for the current candidate. Unsatisfiability of any subset
+of disjunctions rules out bad lists on that graph.
+
+For a real counterexample, choose one tied edge for each index tuple. The
+tie equations have rational coefficients. Their simultaneous solution
+space is defined over the rationals, and the strict-order constraints are
+open within it. Thus a sufficiently close rational point remains a
+counterexample. Clearing denominators gives integer lists and leaves
+every witness tie intact. The unrestricted list conjecture remains open.
+
+\section*{Reproducing the calculation}
+The supplementary archive includes the input graph6 catalogues, the
+coefficient table, and a checker. An exponent vector follows the
+lexicographic ordering of the pairs of vertex labels in the input graph.
+The checker reads the catalogue and the coefficient table in lockstep,
+validates the exponent bounds, and recalculates the residue by direct
+evaluation of the mixed difference. A zero residue from any choice of
+exponents leaves the graph undecided and cannot certify a counterexample.
+
+\begin{thebibliography}{9}
+\bibitem{alon} N. Alon. Combinatorial Nullstellensatz. \emph{Combinatorics,
+Probability and Computing} 8 (1999), 7--29.
+\href{https://doi.org/10.1017/S0963548398003411}{doi:10.1017/S0963548398003411}.
+\bibitem{bgn} T. Bartnicki, J. Grytczuk, S. Niwczyk. Weight choosability
+of graphs. \emph{Journal of Graph Theory} 60 (2009), 242--256.
+\href{https://doi.org/10.1002/jgt.20354}{doi:10.1002/jgt.20354}.
+\bibitem{zhu} X. Zhu. Every nice graph is $(1,5)$-choosable.
+\emph{Journal of Combinatorial Theory, Series B}, 2022.
+\href{https://doi.org/10.1016/j.jctb.2022.08.006}{doi:10.1016/j.jctb.2022.08.006}.
+\bibitem{mckay} B. D. McKay. \href{https://users.cecs.anu.edu.au/~bdm/data/graphs.html}
+{Combinatorial data, simple connected graphs}.
+\end{thebibliography}
+\end{document}
